@@ -1,0 +1,31 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Vladimir Kosolapov",
+                "Website": "https://github.com/vmkspv"
+            }
+        ],
+        "BugReportUrl": "https://github.com/vmkspv/darkstore/issues",
+        "Category": "Utilities",
+        "Description": "Prevent OLED burn-in during downloads",
+        "EnabledByDefault": true,
+        "FormFactors": [
+            "desktop"
+        ],
+        "Icon": "input-gaming",
+        "Id": "io.github.vmkspv.darkstore",
+        "License": "GPL-3.0",
+        "Name": "Darkstore",
+        "Version": "1.0.0",
+        "Website": "https://github.com/vmkspv/darkstore"
+    },
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "X-Plasma-NotificationArea": "true",
+    "X-Plasma-NotificationAreaCategory": "ApplicationStatus",
+    "X-Plasma-Provides": [
+        "org.kde.plasma.powermanagement"
+    ]
+}
