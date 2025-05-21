@@ -19,7 +19,7 @@ PlasmoidItem {
         : undefined
 
     property bool overlayActive: false
-    property int countdownSeconds: 5
+    property int countdownSeconds: plasmoid.configuration.countdownDuration
     property var overlayWindow: null
 
     property bool inhibitActive: false
@@ -163,7 +163,10 @@ PlasmoidItem {
     function createOverlay() {
         var component = Qt.createComponent("OverlayDialog.qml")
         if (component.status === Component.Ready) {
-            overlayWindow = component.createObject(root)
+            overlayWindow = component.createObject(root, {
+                "overlayOpacity": Math.max(0.7, plasmoid.configuration.overlayOpacity),
+                "showClock": plasmoid.configuration.showClock
+            })
 
             overlayWindow.shown.connect(function() {
                 inhibitActive = true
