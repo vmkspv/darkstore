@@ -21,7 +21,7 @@ PlasmaCore.Dialog {
 
     flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.BypassWindowManagerHint | Qt.X11BypassWindowManagerHint
 
-    location: PlasmaCore.Types.FullScreen
+    location: PlasmaCore.Types.Floating
     hideOnWindowDeactivate: false
     backgroundHints: PlasmaCore.Dialog.NoBackground
 
