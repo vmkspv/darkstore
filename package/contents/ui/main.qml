@@ -90,7 +90,7 @@ PlasmoidItem {
             interval: 1000
             repeat: true
             onTriggered: {
-                if (fullRep.remainingSeconds > 0) {
+                if (fullRep.remainingSeconds > 1) {
                     fullRep.remainingSeconds--
                 } else {
                     stop()
@@ -122,7 +122,7 @@ PlasmoidItem {
                 anchors.top: placeholder.bottom
                 anchors.topMargin: Kirigami.Units.largeSpacing
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: i18n("%1 seconds", fullRep.remainingSeconds)
+                text: i18np("%1 second", "%1 seconds", fullRep.remainingSeconds)
                 level: 1
                 color: Kirigami.Theme.highlightColor
                 font.weight: Font.Bold

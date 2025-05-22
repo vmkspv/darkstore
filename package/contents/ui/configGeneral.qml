@@ -211,7 +211,7 @@ SimpleKCM {
                         Layout.alignment: Qt.AlignVCenter
 
                         textFromValue: function(value) {
-                            return value + i18n(" seconds")
+                            return i18np("%1 second", "%1 seconds", value)
                         }
 
                         valueFromText: function(text) {
