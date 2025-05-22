@@ -15,8 +15,17 @@
         <entry name="showClock" type="Bool">
             <default>false</default>
         </entry>
+        <entry name="clockSize" type="Int">
+            <default>96</default>
+        </entry>
         <entry name="countdownDuration" type="Int">
             <default>5</default>
+        </entry>
+        <entry name="useDoubleClick" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="enableDND" type="Bool">
+            <default>true</default>
         </entry>
     </group>
 </kcfg>

@@ -10,6 +10,7 @@ import org.kde.plasma.plasmoid
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.private.batterymonitor
 import org.kde.ksysguard.sensors as Sensors
+import org.kde.notificationmanager as NotificationManager
 
 PlasmoidItem {
     id: root
@@ -52,6 +53,10 @@ PlasmoidItem {
                 }
             }
         }
+    }
+
+    NotificationManager.Settings {
+        id: notificationSettings
     }
 
     compactRepresentation: Item {
@@ -144,6 +149,19 @@ PlasmoidItem {
         })
     }
 
+    function toggleDnd(enable) {
+        if (enable) {
+            var d = new Date()
+            d.setYear(d.getFullYear() + 1)
+            notificationSettings.notificationsInhibitedUntil = d
+            notificationSettings.save()
+        } else {
+            var d = new Date(0)
+            notificationSettings.notificationsInhibitedUntil = d
+            notificationSettings.save()
+        }
+    }
+
     function toggleOverlay() {
         if (overlayActive) {
             if (overlayWindow) {
@@ -153,6 +171,9 @@ PlasmoidItem {
             overlayActive = false
             inhibitActive = false
             inhibitionControl.uninhibit()
+            if (plasmoid.configuration.enableDND) {
+                toggleDnd(false)
+            }
         } else {
             createOverlay()
             overlayActive = true
@@ -165,12 +186,17 @@ PlasmoidItem {
         if (component.status === Component.Ready) {
             overlayWindow = component.createObject(root, {
                 "overlayOpacity": Math.max(0.7, plasmoid.configuration.overlayOpacity),
-                "showClock": plasmoid.configuration.showClock
+                "showClock": plasmoid.configuration.showClock,
+                "clockSize": plasmoid.configuration.clockSize,
+                "useDoubleClick": plasmoid.configuration.useDoubleClick
             })
 
             overlayWindow.shown.connect(function() {
                 inhibitActive = true
                 inhibitionControl.inhibit(i18n("Darkstore overlay is active"))
+                if (plasmoid.configuration.enableDND) {
+                    toggleDnd(true)
+                }
             })
 
             overlayWindow.closing.connect(function() {
@@ -178,6 +204,9 @@ PlasmoidItem {
                 overlayWindow = null
                 inhibitActive = false
                 inhibitionControl.uninhibit()
+                if (plasmoid.configuration.enableDND) {
+                    toggleDnd(false)
+                }
             })
 
             overlayWindow.showFullScreen()

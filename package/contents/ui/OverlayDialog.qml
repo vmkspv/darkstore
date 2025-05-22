@@ -16,6 +16,8 @@ PlasmaCore.Dialog {
 
     property double overlayOpacity: 1.0
     property bool showClock: false
+    property int clockSize: 96
+    property bool useDoubleClick: false
 
     flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.BypassWindowManagerHint | Qt.X11BypassWindowManagerHint
 
@@ -49,16 +51,26 @@ PlasmaCore.Dialog {
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.BlankCursor
+
             onClicked: {
-                overlayDialog.close()
-                overlayDialog.destroy()
+                if (!overlayDialog.useDoubleClick) {
+                    overlayDialog.close()
+                    overlayDialog.destroy()
+                }
+            }
+
+            onDoubleClicked: {
+                if (overlayDialog.useDoubleClick) {
+                    overlayDialog.close()
+                    overlayDialog.destroy()
+                }
             }
         }
 
         Text {
             id: clock
             color: "#80ffffff"
-            font.pixelSize: 64
+            font.pixelSize: overlayDialog.clockSize
             font.bold: true
             visible: overlayDialog.showClock
 
