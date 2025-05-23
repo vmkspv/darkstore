@@ -273,6 +273,7 @@ PlasmoidItem {
                 if (plasmoid.configuration.enableDND) {
                     toggleDnd(true)
                 }
+                Plasmoid.expanded = false
             })
 
             overlayWindow.closing.connect(function() {
