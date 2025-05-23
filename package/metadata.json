@@ -10,6 +10,8 @@
         "BugReportUrl": "https://github.com/vmkspv/darkstore/issues",
         "Category": "Utilities",
         "Description": "Prevent OLED burn-in during downloads",
+        "Description[ru]": "Предотвращение выгорания OLED во время загрузок",
+        "Description[uk]": "Запобігання вигорянню OLED під час завантажень",
         "EnabledByDefault": true,
         "FormFactors": [
             "desktop"
