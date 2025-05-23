@@ -26,7 +26,6 @@ PlasmoidItem {
     property bool inhibitActive: false
     property string inhibitionModule: ""
     property var inhibitionControl: Qt.createQmlObject(inhibitionModule, root, "inhibitionControl")
-    property var inhibitions: inhibitionControl.inhibitions
 
     property string inhibitionControlQml: `
     import org.kde.plasma.private.batterymonitor
@@ -102,7 +101,7 @@ PlasmoidItem {
         Item {
             anchors.centerIn: parent
             width: parent.width - (Kirigami.Units.largeSpacing * 4)
-            height: placeholder.height + countdown.height + Kirigami.Units.largeSpacing
+            height: placeholder.height + countdown.height + sliderArea.height + Kirigami.Units.gridUnit * 3
 
             Kirigami.PlaceholderMessage {
                 id: placeholder
@@ -127,12 +126,89 @@ PlasmoidItem {
                 color: Kirigami.Theme.highlightColor
                 font.weight: Font.Bold
             }
+
+            Item {
+                id: sliderArea
+                anchors.top: countdown.bottom
+                anchors.topMargin: Kirigami.Units.gridUnit * 2
+                width: parent.width
+                height: Kirigami.Units.gridUnit * 4
+
+                Item {
+                    anchors.top: parent.top
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: Kirigami.Units.gridUnit * 18
+                    height: Kirigami.Units.gridUnit * 3
+
+                    Rectangle {
+                        id: sliderTrack
+                        anchors.fill: parent
+                        radius: height / 2
+                        color: Qt.rgba(
+                            Kirigami.Theme.backgroundColor.r,
+                            Kirigami.Theme.backgroundColor.g,
+                            Kirigami.Theme.backgroundColor.b,
+                            0.3
+                        )
+                        border.width: 1
+                        border.color: Qt.rgba(
+                            Kirigami.Theme.textColor.r,
+                            Kirigami.Theme.textColor.g,
+                            Kirigami.Theme.textColor.b,
+                            0.2
+                        )
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: i18n("Slide to activate now")
+                            font.pointSize: Math.round(Kirigami.Theme.defaultFont.pointSize * 0.9)
+                            color: Kirigami.Theme.textColor
+                            opacity: 1.0 - (sliderHandle.x / (sliderTrack.width - sliderHandle.width))
+                        }
+                    }
+
+                    Rectangle {
+                        id: sliderHandle
+                        width: height
+                        height: parent.height
+                        radius: height / 2
+                        x: 0
+                        color: Kirigami.Theme.highlightColor
+
+                        Kirigami.Icon {
+                            anchors.centerIn: parent
+                            width: parent.width * 0.6
+                            height: parent.height * 0.6
+                            source: "go-next"
+                            color: "white"
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            drag.target: sliderHandle
+                            drag.axis: Drag.XAxis
+                            drag.minimumX: 0
+                            drag.maximumX: sliderTrack.width - sliderHandle.width
+
+                            onReleased: {
+                                if (sliderHandle.x > (sliderTrack.width - sliderHandle.width) * 0.8) {
+                                    countdownTimer.stop()
+                                    toggleOverlay()
+                                } else {
+                                    sliderHandle.x = 0
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         onVisibleChanged: {
             if (visible && !overlayActive) {
                 fullRep.remainingSeconds = root.countdownSeconds
                 countdownTimer.start()
+                if (sliderHandle) sliderHandle.x = 0
             } else if (!visible) {
                 countdownTimer.stop()
             }

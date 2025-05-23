@@ -19,7 +19,7 @@
             <default>96</default>
         </entry>
         <entry name="countdownDuration" type="Int">
-            <default>5</default>
+            <default>10</default>
         </entry>
         <entry name="useDoubleClick" type="Bool">
             <default>false</default>
