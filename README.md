@@ -7,6 +7,17 @@ _Darkstore_ is a KDE Plasma applet to prevent OLED burn-in during downloads.
 <br>
 <img src="preview.gif" width="742" title="Popup widget">
 
+## Installation
+
+<a href="https://store.kde.org/p/2290747">
+  <img src="https://kde.org/stuff/clipart/logo/kde-logo-grey-w-slug-vectorized.svg" width="64" align="left"/>
+</a>
+
+The recommended installation method is via the [KDE Store](https://store.kde.org/p/2290747).  
+Plasmoid can be easily added from Plasma Widget Explorer or Discover (KDE Software Center).
+
+The package for manual installation is available in the [releases](https://github.com/vmkspv/darkstore/releases) section.
+
 ## Building from source
 
 The recommended method is to use KPackage Manager:
