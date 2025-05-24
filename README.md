@@ -4,6 +4,18 @@
 
 _Darkstore_ is a KDE Plasma applet to prevent OLED burn-in during downloads.
 
+<p align="center">
+  <a href="https://github.com/vmkspv/darkstore/actions/workflows/plasmoid.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/vmkspv/darkstore/plasmoid.yml?logo=kdeplasma&logoColor=fff&labelColor=3a3e42&color=c7422b"/>
+  </a>
+  <a href="https://github.com/vmkspv/darkstore/releases/latest">
+    <img src="https://img.shields.io/github/v/release/vmkspv/darkstore?logo=github&logoColor=fff&labelColor=3a3e42&color=c7422b"/>
+  </a>
+  <a href="https://store.kde.org/p/2290747">
+    <img src="https://img.shields.io/github/downloads/vmkspv/darkstore/total?logo=kde&logoColor=fff&labelColor=3a3e42&color=c7422b"/>
+  </a>
+</p>
+
 <br>
 <img src="preview.gif" width="742" title="Popup widget">
 
