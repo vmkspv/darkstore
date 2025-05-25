@@ -1,0 +1,106 @@
+# LANGUAGE translations for Darkstore package.
+# Copyright (C) 2025 Vladimir Kosolapov
+# This file is distributed under the same license as the Darkstore package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: darkstore\n"
+"Report-Msgid-Bugs-To: https://github.com/vmkspv/darkstore/issues\n"
+"POT-Creation-Date: 2025-05-23 12:00+0300\n"
+"PO-Revision-Date: 2025-05-25 09:40+0200\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.6\n"
+
+#: package/contents/config/config.qml
+msgid "General"
+msgstr "Algemeen"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Appearance"
+msgstr "Vormgeving"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Configure how the overlay looks"
+msgstr "Zet de dekkingslaag naar eigen hand"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Opacity:"
+msgstr "Doorzichtigheid:"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Adjust transparency of the overlay"
+msgstr "Pas de doorzichtigheid van de dekkingslaag aan"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Show moving clock"
+msgstr "Bewegende klok tonen"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Display current time on the overlay"
+msgstr "Toon het huidige tijdstip op de dekkingslaag"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Clock size:"
+msgstr "Klokgrootte:"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Select the moving clock font size"
+msgstr "Stel de tekstgrootte van de klok in"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Behavior"
+msgstr "Gedrag"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Configure how the overlay behaves"
+msgstr "Stel het gedrag van de dekkingslaag in"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Countdown duration:"
+msgstr "Aftelduur:"
+
+#: package/contents/ui/configGeneral.qml package/contents/ui/main.qml
+msgid "%1 second"
+msgid_plural "%1 seconds"
+msgstr[0] "%1 seconde"
+msgstr[1] "%1 seconden"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Time to wait before activating the overlay"
+msgstr "De wachttijd alvorens de dekkingslaag te tonen"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Use double-click to exit"
+msgstr "Dubbelklikken om te verbergen"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Close overlay with double-click"
+msgstr "Verberg de dekkingslaag door erop te dubbelklikken"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Enable Do Not Disturb"
+msgstr "Niet storen inschakelen"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Activate DND while overlay is visible"
+msgstr "Schakel de nietstoren-modus in als de dekkingslaag getoond wordt"
+
+#: package/contents/ui/main.qml
+msgid "Overlay will activate in:"
+msgstr "De dekkingslaag wordt getoond over:"
+
+#: package/contents/ui/main.qml
+msgid "Slide to activate now"
+msgstr "Verschuif om nu te tonen"
+
+#: package/contents/ui/main.qml
+msgid "Darkstore overlay is active"
+msgstr "De dekkingslaag is actief"
