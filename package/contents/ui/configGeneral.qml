@@ -15,9 +15,94 @@ SimpleKCM {
     property alias cfg_overlayOpacity: opacitySlider.value
     property alias cfg_showClock: showClock.checked
     property alias cfg_clockSize: clockSizeCombo.value
+    property alias cfg_targetScreenName: screenCombo.currentValue
     property alias cfg_countdownDuration: countdownSpinner.value
     property alias cfg_useDoubleClick: useDoubleClick.checked
     property alias cfg_enableDND: enableDND.checked
+    property var screenModel: []
+
+    Component.onCompleted: {
+        updateScreenModel()
+    }
+
+    function updateScreenModel() {
+        screenModel = []
+        var builtInPatterns = ["eDP", "LVDS", "DSI", "PANEL", "INTERNAL", "IDP"]
+
+        for (var i = 0; i < Qt.application.screens.length; i++) {
+            var screen = Qt.application.screens[i]
+            var isBuiltIn = false
+            var name = screen.name.toUpperCase()
+
+            for (var p = 0; p < builtInPatterns.length; p++) {
+                if (name.indexOf(builtInPatterns[p]) >= 0) {
+                    isBuiltIn = true
+                    break
+                }
+            }
+
+            var displayName = screen.name + " (" + screen.width + "x" + screen.height + ")"
+
+            screenModel.push({
+                display: displayName,
+                value: screen.name,
+                isBuiltIn: isBuiltIn
+            })
+        }
+
+        screenModel.sort(function(a, b) {
+            if (a.isBuiltIn && !b.isBuiltIn) return -1
+            if (!a.isBuiltIn && b.isBuiltIn) return 1
+            return 0
+        })
+
+        screenCombo.model = screenModel
+
+        var currentValue = plasmoid.configuration.targetScreenName || ""
+        var foundIndex = -1
+
+        for (var j = 0; j < screenModel.length; j++) {
+            if (screenModel[j].value === currentValue) {
+                foundIndex = j
+                break
+            }
+        }
+
+        if (foundIndex === -1) {
+            for (var k = 0; k < screenModel.length; k++) {
+                if (screenModel[k].isBuiltIn) {
+                    foundIndex = k
+                    break
+                }
+            }
+
+            if (foundIndex === -1) {
+                for (var m = 0; m < Qt.application.screens.length; m++) {
+                    var s = Qt.application.screens[m]
+                    if (s.virtualX === 0 && s.virtualY === 0) {
+                        for (var n = 0; n < screenModel.length; n++) {
+                            if (screenModel[n].value === s.name) {
+                                foundIndex = n
+                                break
+                            }
+                        }
+                        if (foundIndex !== -1) break
+                    }
+                }
+            }
+
+            if (foundIndex === -1 && screenModel.length > 0) {
+                foundIndex = 0
+            }
+
+            if (foundIndex >= 0) {
+                screenCombo.currentIndex = foundIndex
+                plasmoid.configuration.targetScreenName = screenModel[foundIndex].value
+            }
+        } else {
+            screenCombo.currentIndex = foundIndex
+        }
+    }
 
     ColumnLayout {
         Layout.fillWidth: true
@@ -187,6 +272,35 @@ SimpleKCM {
                     font: Kirigami.Theme.smallFont
                     opacity: 0.7
                     Layout.leftMargin: Kirigami.Units.largeSpacing
+                }
+            }
+
+            Item { implicitHeight: Kirigami.Units.smallSpacing }
+
+            ColumnLayout {
+                Layout.leftMargin: Kirigami.Units.largeSpacing
+
+                RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    Label {
+                        text: i18n("Target screen:")
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+
+                    ComboBox {
+                        id: screenCombo
+                        Layout.fillWidth: true
+                        model: screenModel
+                        textRole: "display"
+                        valueRole: "value"
+                    }
+                }
+
+                Label {
+                    text: i18n("Select a monitor for the overlay to appear")
+                    font: Kirigami.Theme.smallFont
+                    opacity: 0.7
                 }
             }
 

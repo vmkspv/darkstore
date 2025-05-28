@@ -21,6 +21,7 @@ PlasmoidItem {
 
     property bool overlayActive: false
     property int countdownSeconds: plasmoid.configuration.countdownDuration
+    property string targetScreenName: plasmoid.configuration.targetScreenName || ""
     property var overlayWindow: null
 
     property bool inhibitActive: false
@@ -260,33 +261,81 @@ PlasmoidItem {
     function createOverlay() {
         var component = Qt.createComponent("OverlayDialog.qml")
         if (component.status === Component.Ready) {
-            overlayWindow = component.createObject(root, {
-                "overlayOpacity": Math.max(0.7, plasmoid.configuration.overlayOpacity),
-                "showClock": plasmoid.configuration.showClock,
-                "clockSize": plasmoid.configuration.clockSize,
-                "useDoubleClick": plasmoid.configuration.useDoubleClick
-            })
+            var targetScreen = null
+            var targetName = root.targetScreenName
 
-            overlayWindow.shown.connect(function() {
-                inhibitActive = true
-                inhibitionControl.inhibit(i18n("Darkstore overlay is active"))
-                if (plasmoid.configuration.enableDND) {
-                    toggleDnd(true)
+            for (var i = 0; i < Qt.application.screens.length; i++) {
+                var screen = Qt.application.screens[i]
+                if (targetName && screen.name === targetName) {
+                    targetScreen = screen
+                    break
                 }
-                Plasmoid.expanded = false
-            })
+            }
 
-            overlayWindow.closing.connect(function() {
-                overlayActive = false
-                overlayWindow = null
-                inhibitActive = false
-                inhibitionControl.uninhibit()
-                if (plasmoid.configuration.enableDND) {
-                    toggleDnd(false)
+            if (!targetScreen && !targetName && Qt.application.screens.length > 0) {
+                var builtInPatterns = ["eDP", "LVDS", "DSI", "PANEL", "INTERNAL", "IDP"]
+
+                for (var j = 0; j < Qt.application.screens.length; j++) {
+                    var screen = Qt.application.screens[j]
+                    var name = screen.name.toUpperCase()
+
+                    for (var p = 0; p < builtInPatterns.length; p++) {
+                        if (name.indexOf(builtInPatterns[p]) >= 0) {
+                            targetScreen = screen
+                            break
+                        }
+                    }
+                    if (targetScreen) break
                 }
-            })
 
-            overlayWindow.showFullScreen()
+                if (!targetScreen) {
+                    for (var k = 0; k < Qt.application.screens.length; k++) {
+                        var screen = Qt.application.screens[k]
+                        if (screen.virtualX === 0 && screen.virtualY === 0) {
+                            targetScreen = screen
+                            break
+                        }
+                    }
+                }
+
+                if (!targetScreen && Qt.application.screens.length > 0) {
+                    targetScreen = Qt.application.screens[0]
+                }
+            }
+
+            if (targetScreen) {
+                overlayWindow = component.createObject(root, {
+                    "overlayOpacity": Math.max(0.7, plasmoid.configuration.overlayOpacity),
+                    "showClock": plasmoid.configuration.showClock,
+                    "clockSize": plasmoid.configuration.clockSize,
+                    "useDoubleClick": plasmoid.configuration.useDoubleClick,
+                    "x": targetScreen.virtualX,
+                    "y": targetScreen.virtualY,
+                    "width": targetScreen.width,
+                    "height": targetScreen.height
+                })
+
+                overlayWindow.shown.connect(function() {
+                    inhibitActive = true
+                    inhibitionControl.inhibit(i18n("Darkstore overlay is active"))
+                    if (plasmoid.configuration.enableDND) {
+                        toggleDnd(true)
+                    }
+                    Plasmoid.expanded = false
+                })
+
+                overlayWindow.closing.connect(function() {
+                    overlayActive = false
+                    overlayWindow = null
+                    inhibitActive = false
+                    inhibitionControl.uninhibit()
+                    if (plasmoid.configuration.enableDND) {
+                        toggleDnd(false)
+                    }
+                })
+
+                overlayWindow.showFullScreen()
+            }
         }
     }
 }
