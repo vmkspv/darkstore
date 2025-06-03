@@ -18,6 +18,7 @@ SimpleKCM {
     property alias cfg_targetScreenName: screenCombo.currentValue
     property alias cfg_countdownDuration: countdownSpinner.value
     property alias cfg_useDoubleClick: useDoubleClick.checked
+    property alias cfg_enableQuickPeek: enableQuickPeek.checked
     property alias cfg_enableDND: enableDND.checked
     property var screenModel: []
 
@@ -356,6 +357,24 @@ SimpleKCM {
                     font: Kirigami.Theme.smallFont
                     opacity: 0.7
                     leftPadding: useDoubleClick.indicator.width + useDoubleClick.spacing
+                }
+            }
+
+            Item { implicitHeight: Kirigami.Units.smallSpacing }
+
+            ColumnLayout {
+                Layout.leftMargin: Kirigami.Units.largeSpacing
+
+                CheckBox {
+                    id: enableQuickPeek
+                    text: i18n("Enable Quick Peek")
+                }
+
+                Label {
+                    text: i18n("Long-press to see through the overlay")
+                    font: Kirigami.Theme.smallFont
+                    opacity: 0.7
+                    leftPadding: enableQuickPeek.indicator.width + enableQuickPeek.spacing
                 }
             }
 

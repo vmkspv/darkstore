@@ -18,6 +18,7 @@ PlasmaCore.Dialog {
     property bool showClock: false
     property int clockSize: 96
     property bool useDoubleClick: false
+    property bool enableQuickPeek: false
 
     flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.BypassWindowManagerHint | Qt.X11BypassWindowManagerHint
 
@@ -45,15 +46,37 @@ PlasmaCore.Dialog {
         width: Screen.width
         height: Screen.height
         color: "black"
-        opacity: overlayDialog.overlayOpacity
+        opacity: peekActive ? 0.3 : overlayDialog.overlayOpacity
+
+        property bool peekActive: false
 
         MouseArea {
+            id: mouseArea
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.BlankCursor
 
+            property bool longPressed: false
+
+            onPressed: {
+                if (overlayDialog.enableQuickPeek) {
+                    longPressTimer.restart()
+                }
+            }
+
+            onReleased: {
+                longPressTimer.stop()
+                if (overlay.peekActive) {
+                    overlay.peekActive = false
+                } else if (!longPressed && !overlayDialog.useDoubleClick) {
+                    overlayDialog.close()
+                    overlayDialog.destroy()
+                }
+                longPressed = false
+            }
+
             onClicked: {
-                if (!overlayDialog.useDoubleClick) {
+                if (!longPressed && !overlayDialog.useDoubleClick) {
                     overlayDialog.close()
                     overlayDialog.destroy()
                 }
@@ -63,6 +86,18 @@ PlasmaCore.Dialog {
                 if (overlayDialog.useDoubleClick) {
                     overlayDialog.close()
                     overlayDialog.destroy()
+                }
+            }
+
+            Timer {
+                id: longPressTimer
+                interval: 600
+                repeat: false
+                onTriggered: {
+                    if (overlayDialog.enableQuickPeek) {
+                        mouseArea.longPressed = true
+                        overlay.peekActive = true
+                    }
                 }
             }
         }

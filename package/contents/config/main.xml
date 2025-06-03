@@ -27,6 +27,9 @@
         <entry name="useDoubleClick" type="Bool">
             <default>false</default>
         </entry>
+        <entry name="enableQuickPeek" type="Bool">
+            <default>false</default>
+        </entry>
         <entry name="enableDND" type="Bool">
             <default>true</default>
         </entry>

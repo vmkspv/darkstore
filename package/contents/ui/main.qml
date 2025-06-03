@@ -309,6 +309,7 @@ PlasmoidItem {
                     "showClock": plasmoid.configuration.showClock,
                     "clockSize": plasmoid.configuration.clockSize,
                     "useDoubleClick": plasmoid.configuration.useDoubleClick,
+                    "enableQuickPeek": plasmoid.configuration.enableQuickPeek,
                     "x": targetScreen.virtualX,
                     "y": targetScreen.virtualY,
                     "width": targetScreen.width,
