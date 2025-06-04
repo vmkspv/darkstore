@@ -350,6 +350,11 @@ SimpleKCM {
                 CheckBox {
                     id: useDoubleClick
                     text: i18n("Use double-click to exit")
+                    onCheckedChanged: {
+                        if (!checked) {
+                            enableQuickPeek.checked = false
+                        }
+                    }
                 }
 
                 Label {
@@ -368,12 +373,14 @@ SimpleKCM {
                 CheckBox {
                     id: enableQuickPeek
                     text: i18n("Enable Quick Peek")
+                    enabled: useDoubleClick.checked
+                    opacity: useDoubleClick.checked ? 1.0 : 0.5
                 }
 
                 Label {
                     text: i18n("Long-press to see through the overlay")
                     font: Kirigami.Theme.smallFont
-                    opacity: 0.7
+                    opacity: useDoubleClick.checked ? 0.7 : 0.3
                     leftPadding: enableQuickPeek.indicator.width + enableQuickPeek.spacing
                 }
             }

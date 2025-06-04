@@ -21,7 +21,9 @@ PlasmoidItem {
 
     property bool overlayActive: false
     property int countdownSeconds: plasmoid.configuration.countdownDuration
+    property int remainingSeconds: countdownSeconds
     property string targetScreenName: plasmoid.configuration.targetScreenName || ""
+    property var sliderControl: null
     property var overlayWindow: null
 
     property bool inhibitActive: false
@@ -59,6 +61,37 @@ PlasmoidItem {
         id: notificationSettings
     }
 
+    Timer {
+        id: countdownTimer
+        interval: 1000
+        repeat: true
+        onTriggered: {
+            if (root.remainingSeconds > 1) {
+                root.remainingSeconds--
+            } else {
+                stop()
+                toggleOverlay()
+            }
+        }
+    }
+
+    onExpandedChanged: {
+        if (expanded) {
+            resetCountdown()
+            if (!overlayActive && sliderControl) {
+                sliderControl.x = 0
+            }
+        } else {
+            countdownTimer.stop()
+        }
+    }
+
+    function resetCountdown() {
+        if (overlayActive) return
+        root.remainingSeconds = root.countdownSeconds
+        countdownTimer.restart()
+    }
+
     compactRepresentation: Item {
         Kirigami.Icon {
             anchors.fill: parent
@@ -77,27 +110,10 @@ PlasmoidItem {
     }
 
     fullRepresentation: Item {
-        id: fullRep
-        Layout.minimumWidth: Kirigami.Units.gridUnit * 14
-        Layout.minimumHeight: Kirigami.Units.gridUnit * 18
-        Layout.preferredWidth: Kirigami.Units.gridUnit * 20
-        Layout.preferredHeight: Kirigami.Units.gridUnit * 28
-
-        property int remainingSeconds: 0
-
-        Timer {
-            id: countdownTimer
-            interval: 1000
-            repeat: true
-            onTriggered: {
-                if (fullRep.remainingSeconds > 1) {
-                    fullRep.remainingSeconds--
-                } else {
-                    stop()
-                    toggleOverlay()
-                }
-            }
-        }
+        Layout.minimumWidth: Kirigami.Units.gridUnit * 20
+        Layout.minimumHeight: Kirigami.Units.gridUnit * 22
+        Layout.preferredWidth: Kirigami.Units.gridUnit * 22
+        Layout.preferredHeight: Kirigami.Units.gridUnit * 24
 
         Item {
             anchors.centerIn: parent
@@ -122,7 +138,7 @@ PlasmoidItem {
                 anchors.top: placeholder.bottom
                 anchors.topMargin: Kirigami.Units.largeSpacing
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: i18np("%1 second", "%1 seconds", fullRep.remainingSeconds)
+                text: i18np("%1 second", "%1 seconds", root.remainingSeconds)
                 level: 1
                 color: Kirigami.Theme.highlightColor
                 font.weight: Font.Bold
@@ -200,18 +216,12 @@ PlasmoidItem {
                                 }
                             }
                         }
+
+                        Component.onCompleted: {
+                            root.sliderControl = sliderHandle
+                        }
                     }
                 }
-            }
-        }
-
-        onVisibleChanged: {
-            if (visible && !overlayActive) {
-                fullRep.remainingSeconds = root.countdownSeconds
-                countdownTimer.start()
-                if (sliderHandle) sliderHandle.x = 0
-            } else if (!visible) {
-                countdownTimer.stop()
             }
         }
     }
