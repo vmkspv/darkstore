@@ -318,6 +318,7 @@ PlasmoidItem {
                     "overlayOpacity": Math.max(0.7, plasmoid.configuration.overlayOpacity),
                     "showClock": plasmoid.configuration.showClock,
                     "clockSize": plasmoid.configuration.clockSize,
+                    "showBattery": plasmoid.configuration.showBattery,
                     "useDoubleClick": plasmoid.configuration.useDoubleClick,
                     "enableQuickPeek": plasmoid.configuration.enableQuickPeek,
                     "x": targetScreen.virtualX,

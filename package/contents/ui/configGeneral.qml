@@ -8,6 +8,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.kcmutils
 import org.kde.kirigami as Kirigami
+import org.kde.plasma.private.battery
 
 SimpleKCM {
     id: generalPage
@@ -15,12 +16,17 @@ SimpleKCM {
     property alias cfg_overlayOpacity: opacitySlider.value
     property alias cfg_showClock: showClock.checked
     property alias cfg_clockSize: clockSizeCombo.value
+    property alias cfg_showBattery: showBattery.checked
     property alias cfg_targetScreenName: screenCombo.currentValue
     property alias cfg_countdownDuration: countdownSpinner.value
     property alias cfg_useDoubleClick: useDoubleClick.checked
     property alias cfg_enableQuickPeek: enableQuickPeek.checked
     property alias cfg_enableDND: enableDND.checked
     property var screenModel: []
+
+    BatteryControlModel {
+        id: batteryInfo
+    }
 
     Component.onCompleted: {
         updateScreenModel()
@@ -175,6 +181,11 @@ SimpleKCM {
                 CheckBox {
                     id: showClock
                     text: i18n("Show moving clock")
+                    onCheckedChanged: {
+                        if (!checked) {
+                            showBattery.checked = false
+                        }
+                    }
                 }
 
                 Label {
@@ -248,6 +259,26 @@ SimpleKCM {
                     font: Kirigami.Theme.smallFont
                     opacity: showClock.checked ? 0.7 : 0.3
                     leftPadding: showClock.indicator.width + showClock.spacing
+                }
+            }
+
+            Item { implicitHeight: Kirigami.Units.smallSpacing }
+
+            ColumnLayout {
+                Layout.leftMargin: Kirigami.Units.largeSpacing
+
+                CheckBox {
+                    id: showBattery
+                    text: i18n("Show battery status")
+                    enabled: showClock.checked && batteryInfo.hasBatteries
+                    opacity: showClock.checked && batteryInfo.hasBatteries ? 1.0 : 0.5
+                }
+
+                Label {
+                    text: i18n("Display battery status on the overlay")
+                    font: Kirigami.Theme.smallFont
+                    opacity: showClock.checked && batteryInfo.hasBatteries ? 0.7 : 0.3
+                    leftPadding: showBattery.indicator.width + showBattery.spacing
                 }
             }
 

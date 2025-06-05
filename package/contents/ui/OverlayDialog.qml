@@ -7,6 +7,7 @@ import QtQuick
 import QtQuick.Window
 import org.kde.plasma.core as PlasmaCore
 import org.kde.kwindowsystem
+import "." as Local
 
 PlasmaCore.Dialog {
     id: overlayDialog
@@ -17,6 +18,7 @@ PlasmaCore.Dialog {
     property double overlayOpacity: 1.0
     property bool showClock: false
     property int clockSize: 96
+    property bool showBattery: false
     property bool useDoubleClick: false
     property bool enableQuickPeek: false
 
@@ -102,21 +104,36 @@ PlasmaCore.Dialog {
             }
         }
 
-        Text {
-            id: clock
-            color: "#80ffffff"
-            font.pixelSize: overlayDialog.clockSize
-            font.bold: true
+        Item {
+            id: clockContainer
             visible: overlayDialog.showClock
+            x: clock.xPos
+            y: clock.yPos
+            width: Math.max(clock.width, batteryStatus.width)
+            height: clock.height + (batteryStatus.visible ? batteryStatus.height + Math.round(overlayDialog.clockSize * 0.1) : 0)
 
-            property int xDirection: 1
-            property int yDirection: 1
-            property int xPos: Math.random() * (parent.width - width)
-            property int yPos: Math.random() * (parent.height - height)
-            property int speed: 1
+            Text {
+                id: clock
+                color: "#80ffffff"
+                font.pixelSize: overlayDialog.clockSize
+                font.bold: true
 
-            x: xPos
-            y: yPos
+                property int xDirection: 1
+                property int yDirection: 1
+                property int xPos: Math.random() * (parent.parent.width - parent.width)
+                property int yPos: Math.random() * (parent.parent.height - parent.height)
+                property int speed: 1
+            }
+
+            Local.BatteryStatus {
+                id: batteryStatus
+                anchors {
+                    top: clock.bottom
+                    horizontalCenter: clock.horizontalCenter
+                }
+                visible: overlayDialog.showClock && overlayDialog.showBattery
+                clockSize: overlayDialog.clockSize
+            }
 
             Timer {
                 interval: 1000
@@ -141,17 +158,17 @@ PlasmaCore.Dialog {
                     if (clock.xPos <= 0) {
                         clock.xDirection = 1
                         clock.xPos = 0
-                    } else if (clock.xPos >= overlay.width - clock.width) {
+                    } else if (clock.xPos >= overlay.width - clockContainer.width) {
                         clock.xDirection = -1
-                        clock.xPos = overlay.width - clock.width
+                        clock.xPos = overlay.width - clockContainer.width
                     }
 
                     if (clock.yPos <= 0) {
                         clock.yDirection = 1
                         clock.yPos = 0
-                    } else if (clock.yPos >= overlay.height - clock.height) {
+                    } else if (clock.yPos >= overlay.height - clockContainer.height) {
                         clock.yDirection = -1
-                        clock.yPos = overlay.height - clock.height
+                        clock.yPos = overlay.height - clockContainer.height
                     }
                 }
             }
