@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: darkstore\n"
 "Report-Msgid-Bugs-To: https://github.com/vmkspv/darkstore/issues\n"
-"POT-Creation-Date: 2025-05-23 12:00+0300\n"
-"PO-Revision-Date: 2025-05-23 13:00+0300\n"
+"POT-Creation-Date: 2025-06-05 20:00+0300\n"
+"PO-Revision-Date: 2025-06-05 21:00+0300\n"
 "Last-Translator: Vladimir Kosolapov\n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -21,6 +21,14 @@ msgstr ""
 #: package/contents/config/config.qml
 msgid "General"
 msgstr "Основное"
+
+#: package/contents/ui/BatteryStatus.qml
+msgid "Charging %1%"
+msgstr "Заряжается %1%"
+
+#: package/contents/ui/BatteryStatus.qml
+msgid "Battery %1%"
+msgstr "Батарея %1%"
 
 #: package/contents/ui/configGeneral.qml
 msgid "Appearance"
@@ -55,12 +63,28 @@ msgid "Select the moving clock font size"
 msgstr "Выберите размер подвижных часов"
 
 #: package/contents/ui/configGeneral.qml
+msgid "Show battery status"
+msgstr "Показать уровень заряда"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Display battery status on the overlay"
+msgstr "Отображать статус батареи на оверлее"
+
+#: package/contents/ui/configGeneral.qml
 msgid "Behavior"
 msgstr "Поведение"
 
 #: package/contents/ui/configGeneral.qml
 msgid "Configure how the overlay behaves"
 msgstr "Настройте функциональность виджета"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Target screen:"
+msgstr "Целевой экран:"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Select a monitor for the overlay to appear"
+msgstr "Выберите монитор для отображения оверлея"
 
 #: package/contents/ui/configGeneral.qml
 msgid "Countdown duration:"
@@ -85,6 +109,14 @@ msgstr "Двойной щелчок для выхода"
 #: package/contents/ui/configGeneral.qml
 msgid "Close overlay with double-click"
 msgstr "Закрывать оверлей двойным щелчком мыши"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Enable Quick Peek"
+msgstr "Мгновенный просмотр"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Long-press to see through the overlay"
+msgstr "Удержание для просмотра сквозь оверлей"
 
 #: package/contents/ui/configGeneral.qml
 msgid "Enable Do Not Disturb"

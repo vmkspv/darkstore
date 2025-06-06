@@ -1,9 +1,8 @@
-# LANGUAGE translations for Darkstore package.
+# Dutch translations for Darkstore package.
 # Copyright (C) 2025 Vladimir Kosolapov
 # This file is distributed under the same license as the Darkstore package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Heimen Stoffels <vistausss@fastmail.com>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: darkstore\n"
@@ -67,7 +66,8 @@ msgstr "Stel het gedrag van de dekkingslaag in"
 msgid "Countdown duration:"
 msgstr "Aftelduur:"
 
-#: package/contents/ui/configGeneral.qml package/contents/ui/main.qml
+#: package/contents/ui/configGeneral.qml
+#: package/contents/ui/main.qml
 msgid "%1 second"
 msgid_plural "%1 seconds"
 msgstr[0] "%1 seconde"

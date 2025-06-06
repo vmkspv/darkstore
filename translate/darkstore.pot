@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: darkstore\n"
 "Report-Msgid-Bugs-To: https://github.com/vmkspv/darkstore/issues\n"
-"POT-Creation-Date: 2025-05-23 12:00+0300\n"
+"POT-Creation-Date: 2025-06-05 20:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,14 @@ msgstr ""
 
 #: package/contents/config/config.qml
 msgid "General"
+msgstr ""
+
+#: package/contents/ui/BatteryStatus.qml
+msgid "Charging %1%"
+msgstr ""
+
+#: package/contents/ui/BatteryStatus.qml
+msgid "Battery %1%"
 msgstr ""
 
 #: package/contents/ui/configGeneral.qml
@@ -55,11 +63,27 @@ msgid "Select the moving clock font size"
 msgstr ""
 
 #: package/contents/ui/configGeneral.qml
+msgid "Show battery status"
+msgstr ""
+
+#: package/contents/ui/configGeneral.qml
+msgid "Display battery status on the overlay"
+msgstr ""
+
+#: package/contents/ui/configGeneral.qml
 msgid "Behavior"
 msgstr ""
 
 #: package/contents/ui/configGeneral.qml
 msgid "Configure how the overlay behaves"
+msgstr ""
+
+#: package/contents/ui/configGeneral.qml
+msgid "Target screen:"
+msgstr ""
+
+#: package/contents/ui/configGeneral.qml
+msgid "Select a monitor for the overlay to appear"
 msgstr ""
 
 #: package/contents/ui/configGeneral.qml
@@ -83,6 +107,14 @@ msgstr ""
 
 #: package/contents/ui/configGeneral.qml
 msgid "Close overlay with double-click"
+msgstr ""
+
+#: package/contents/ui/configGeneral.qml
+msgid "Enable Quick Peek"
+msgstr ""
+
+#: package/contents/ui/configGeneral.qml
+msgid "Long-press to see through the overlay"
 msgstr ""
 
 #: package/contents/ui/configGeneral.qml
