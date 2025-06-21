@@ -5,15 +5,14 @@
 
 import QtQuick
 import QtQuick.Window
-import org.kde.plasma.core as PlasmaCore
-import org.kde.kwindowsystem
+import org.kde.kirigami as Kirigami
 import "." as Local
 
-PlasmaCore.Dialog {
-    id: overlayDialog
+Kirigami.AbstractApplicationWindow {
+    id: overlayWindow
 
-    signal closing()
-    signal shown()
+    signal overlayClosing()
+    signal overlayShown()
 
     property double overlayOpacity: 1.0
     property bool showClock: false
@@ -23,34 +22,21 @@ PlasmaCore.Dialog {
     property bool enableQuickPeek: false
 
     flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.BypassWindowManagerHint | Qt.X11BypassWindowManagerHint
-
-    location: PlasmaCore.Types.Floating
-    hideOnWindowDeactivate: false
-    backgroundHints: PlasmaCore.Dialog.NoBackground
-
-    type: PlasmaCore.Dialog.OnScreenDisplay
-
-    x: 0
-    y: 0
-    width: Screen.width
-    height: Screen.height
+    color: Qt.rgba(0, 0, 0, mouseArea.peekActive ? 0.3 : overlayOpacity)
+    visibility: Window.FullScreen
 
     onVisibleChanged: {
         if (!visible) {
-            closing()
+            overlayClosing()
         } else {
-            shown()
+            overlayShown()
         }
     }
 
-    mainItem: Rectangle {
+    Rectangle {
         id: overlay
-        width: Screen.width
-        height: Screen.height
-        color: "black"
-        opacity: peekActive ? 0.3 : overlayDialog.overlayOpacity
-
-        property bool peekActive: false
+        anchors.fill: parent
+        color: "transparent"
 
         MouseArea {
             id: mouseArea
@@ -59,35 +45,36 @@ PlasmaCore.Dialog {
             cursorShape: Qt.BlankCursor
 
             property bool longPressed: false
+            property bool peekActive: false
 
             onPressed: {
-                if (overlayDialog.enableQuickPeek) {
+                if (overlayWindow.enableQuickPeek) {
                     longPressTimer.restart()
                 }
             }
 
             onReleased: {
                 longPressTimer.stop()
-                if (overlay.peekActive) {
-                    overlay.peekActive = false
-                } else if (!longPressed && !overlayDialog.useDoubleClick) {
-                    overlayDialog.close()
-                    overlayDialog.destroy()
+                if (peekActive) {
+                    peekActive = false
+                } else if (!longPressed && !overlayWindow.useDoubleClick) {
+                    overlayWindow.close()
+                    overlayWindow.destroy()
                 }
                 longPressed = false
             }
 
             onClicked: {
-                if (!longPressed && !overlayDialog.useDoubleClick) {
-                    overlayDialog.close()
-                    overlayDialog.destroy()
+                if (!longPressed && !overlayWindow.useDoubleClick) {
+                    overlayWindow.close()
+                    overlayWindow.destroy()
                 }
             }
 
             onDoubleClicked: {
-                if (overlayDialog.useDoubleClick) {
-                    overlayDialog.close()
-                    overlayDialog.destroy()
+                if (overlayWindow.useDoubleClick) {
+                    overlayWindow.close()
+                    overlayWindow.destroy()
                 }
             }
 
@@ -96,9 +83,9 @@ PlasmaCore.Dialog {
                 interval: 600
                 repeat: false
                 onTriggered: {
-                    if (overlayDialog.enableQuickPeek) {
+                    if (overlayWindow.enableQuickPeek) {
                         mouseArea.longPressed = true
-                        overlay.peekActive = true
+                        mouseArea.peekActive = true
                     }
                 }
             }
@@ -106,16 +93,16 @@ PlasmaCore.Dialog {
 
         Item {
             id: clockContainer
-            visible: overlayDialog.showClock
+            visible: overlayWindow.showClock
             x: clock.xPos
             y: clock.yPos
             width: Math.max(clock.width, batteryStatus.width)
-            height: clock.height + (batteryStatus.visible ? batteryStatus.height + Math.round(overlayDialog.clockSize * 0.1) : 0)
+            height: clock.height + (batteryStatus.visible ? batteryStatus.height + Math.round(overlayWindow.clockSize * 0.1) : 0)
 
             Text {
                 id: clock
                 color: "#80ffffff"
-                font.pixelSize: overlayDialog.clockSize
+                font.pixelSize: overlayWindow.clockSize
                 font.bold: true
 
                 property int xDirection: 1
@@ -131,13 +118,13 @@ PlasmaCore.Dialog {
                     top: clock.bottom
                     horizontalCenter: clock.horizontalCenter
                 }
-                visible: overlayDialog.showClock && overlayDialog.showBattery
-                clockSize: overlayDialog.clockSize
+                visible: overlayWindow.showClock && overlayWindow.showBattery
+                clockSize: overlayWindow.clockSize
             }
 
             Timer {
                 interval: 1000
-                running: overlayDialog.showClock
+                running: overlayWindow.showClock
                 repeat: true
                 triggeredOnStart: true
                 onTriggered: {
@@ -148,7 +135,7 @@ PlasmaCore.Dialog {
 
             Timer {
                 interval: 32
-                running: overlayDialog.showClock
+                running: overlayWindow.showClock
                 repeat: true
 
                 onTriggered: {
@@ -175,8 +162,8 @@ PlasmaCore.Dialog {
         }
 
         Keys.onEscapePressed: {
-            overlayDialog.close()
-            overlayDialog.destroy()
+            overlayWindow.close()
+            overlayWindow.destroy()
         }
 
         Component.onCompleted: {
@@ -185,15 +172,9 @@ PlasmaCore.Dialog {
     }
 
     function showFullScreen() {
-        visible = true
-        KWindowSystem.setType(overlayDialog.winId, KWindowSystem.OnScreenDisplay)
-        KWindowSystem.setState(overlayDialog.winId,
-            KWindowSystem.FullScreen |
-            KWindowSystem.KeepAbove |
-            KWindowSystem.SkipTaskbar |
-            KWindowSystem.SkipPager |
-            KWindowSystem.StaysOnTop)
-
-        KWindowSystem.forceActiveWindow(overlayDialog.winId)
+        show()
+        raise()
+        requestActivate()
+        overlayShown()
     }
 }

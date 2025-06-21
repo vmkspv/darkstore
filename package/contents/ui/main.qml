@@ -48,7 +48,7 @@ PlasmoidItem {
         onDataChanged: {
             const value = data(index(0, 0), Sensors.SensorDataModel.Value)
             if (value !== undefined && value !== null) {
-                if (value.indexOf("6.3") >= 0) {
+                if (value >= "6.3") {
                     inhibitionModule = inhibitionControlQml
                 } else {
                     inhibitionModule = powerManagementControlQml
@@ -75,7 +75,7 @@ PlasmoidItem {
         }
     }
 
-    onExpandedChanged: {
+    onExpandedChanged: function(expanded) {
         if (expanded) {
             resetCountdown()
             if (!overlayActive && sliderControl) {
@@ -226,16 +226,6 @@ PlasmoidItem {
         }
     }
 
-    Component.onCompleted: {
-        plasmoid.addEventListener("activate", function() {
-            if (!overlayActive) {
-                Plasmoid.expanded = true
-            } else {
-                toggleOverlay()
-            }
-        })
-    }
-
     function toggleDnd(enable) {
         if (enable) {
             var d = new Date()
@@ -269,7 +259,7 @@ PlasmoidItem {
     }
 
     function createOverlay() {
-        var component = Qt.createComponent("OverlayDialog.qml")
+        var component = Qt.createComponent("OverlayWindow.qml")
         if (component.status === Component.Ready) {
             var targetScreen = null
             var targetName = root.targetScreenName
@@ -327,7 +317,7 @@ PlasmoidItem {
                     "height": targetScreen.height
                 })
 
-                overlayWindow.shown.connect(function() {
+                overlayWindow.overlayShown.connect(function() {
                     inhibitActive = true
                     inhibitionControl.inhibit(i18n("Darkstore overlay is active"))
                     if (plasmoid.configuration.enableDND) {
@@ -336,7 +326,7 @@ PlasmoidItem {
                     Plasmoid.expanded = false
                 })
 
-                overlayWindow.closing.connect(function() {
+                overlayWindow.overlayClosing.connect(function() {
                     overlayActive = false
                     overlayWindow = null
                     inhibitActive = false
