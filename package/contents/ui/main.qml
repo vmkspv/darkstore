@@ -304,7 +304,7 @@ PlasmoidItem {
             }
 
             if (targetScreen) {
-                overlayWindow = component.createObject(root, {
+                overlayWindow = component.createObject(null, {
                     "overlayOpacity": Math.max(0.7, plasmoid.configuration.overlayOpacity),
                     "showClock": plasmoid.configuration.showClock,
                     "clockSize": plasmoid.configuration.clockSize,
