@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: darkstore\n"
 "Report-Msgid-Bugs-To: https://github.com/vmkspv/darkstore/issues\n"
-"POT-Creation-Date: 2025-06-05 20:00+0300\n"
-"PO-Revision-Date: 2025-06-05 21:00+0300\n"
+"POT-Creation-Date: 2025-06-22 17:30+0300\n"
+"PO-Revision-Date: 2025-06-22 18:00+0300\n"
 "Last-Translator: Vladimir Kosolapov\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -124,8 +124,20 @@ msgid "Enable Do Not Disturb"
 msgstr "Режим «Не турбувати»"
 
 #: package/contents/ui/configGeneral.qml
+msgid ""
+"Starting with Plasma 6.4, the default Do Not Disturb behavior is also "
+"controlled by system settings."
+msgstr ""
+"Починаючи з Plasma 6.4, поведінку цього налаштування додатково контролюють "
+"системні параметри."
+
+#: package/contents/ui/configGeneral.qml
 msgid "Activate DND while overlay is visible"
 msgstr "Приховувати сповіщення при запуску оверлея"
+
+#: package/contents/ui/KWinManager.qml
+msgid "Overlay settings for Darkstore"
+msgstr "Параметри оверлея Darkstore"
 
 #: package/contents/ui/main.qml
 msgid "Overlay will activate in:"
