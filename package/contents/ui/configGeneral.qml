@@ -421,9 +421,17 @@ SimpleKCM {
             ColumnLayout {
                 Layout.leftMargin: Kirigami.Units.largeSpacing
 
-                CheckBox {
-                    id: enableDND
-                    text: i18n("Enable Do Not Disturb")
+                RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    CheckBox {
+                        id: enableDND
+                        text: i18n("Enable Do Not Disturb")
+                    }
+
+                    Kirigami.ContextualHelpButton {
+                        toolTipText: i18n("Starting with Plasma 6.4, the default Do Not Disturb behavior is also controlled by system settings.")
+                    }
                 }
 
                 Label {
