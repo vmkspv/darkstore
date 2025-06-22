@@ -311,6 +311,7 @@ PlasmoidItem {
                     "showBattery": plasmoid.configuration.showBattery,
                     "useDoubleClick": plasmoid.configuration.useDoubleClick,
                     "enableQuickPeek": plasmoid.configuration.enableQuickPeek,
+                    "title": plasmoid.metaData.name,
                     "x": targetScreen.virtualX,
                     "y": targetScreen.virtualY,
                     "width": targetScreen.width,
@@ -339,5 +340,9 @@ PlasmoidItem {
                 overlayWindow.showFullScreen()
             }
         }
+    }
+
+    Component.onCompleted: {
+        Qt.createComponent("KWinManager.qml").createObject(root)
     }
 }
