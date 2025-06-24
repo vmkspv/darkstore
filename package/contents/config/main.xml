@@ -25,7 +25,7 @@
             <default></default>
         </entry>
         <entry name="countdownDuration" type="Int">
-            <default>10</default>
+            <default>5</default>
         </entry>
         <entry name="useDoubleClick" type="Bool">
             <default>false</default>

@@ -351,17 +351,17 @@ SimpleKCM {
 
                     SpinBox {
                         id: countdownSpinner
-                        from: 3
+                        from: 0
                         to: 30
-                        stepSize: 5
+                        stepSize: 1
                         Layout.alignment: Qt.AlignVCenter
 
                         textFromValue: function(value) {
-                            return i18np("%1 second", "%1 seconds", value)
+                            return value === 0 ? i18n("Immediate") : i18np("%1 second", "%1 seconds", value)
                         }
 
                         valueFromText: function(text) {
-                            return parseInt(text) || 5
+                            return parseInt(text) || 0
                         }
                     }
                 }

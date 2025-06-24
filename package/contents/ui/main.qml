@@ -66,12 +66,25 @@ PlasmoidItem {
         interval: 1000
         repeat: true
         onTriggered: {
-            if (root.remainingSeconds > 1) {
+            if (root.remainingSeconds > 0) {
                 root.remainingSeconds--
+                if (root.remainingSeconds === 0) {
+                    stop()
+                    toggleOverlay()
+                }
             } else {
                 stop()
                 toggleOverlay()
             }
+        }
+    }
+
+    Timer {
+        id: immediateTimer
+        interval: 100
+        repeat: false
+        onTriggered: {
+            toggleOverlay()
         }
     }
 
@@ -89,6 +102,18 @@ PlasmoidItem {
     function resetCountdown() {
         if (overlayActive) return
         root.remainingSeconds = root.countdownSeconds
+
+        if (root.countdownSeconds === 0) {
+            if (plasmoid.configuration.enableQuickPeek || plasmoid.configuration.overlayOpacity < 1.0) {
+                Plasmoid.expanded = false
+                immediateTimer.start()
+            } else {
+                Plasmoid.expanded = false
+                toggleOverlay()
+            }
+            return
+        }
+
         countdownTimer.restart()
     }
 
