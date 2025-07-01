@@ -22,6 +22,7 @@ SimpleKCM {
     property alias cfg_useDoubleClick: useDoubleClick.checked
     property alias cfg_enableQuickPeek: enableQuickPeek.checked
     property alias cfg_enableDND: enableDND.checked
+    property alias cfg_muteOnOverlay: muteOnOverlay.checked
     property var screenModel: []
 
     BatteryControlModel {
@@ -439,6 +440,24 @@ SimpleKCM {
                     font: Kirigami.Theme.smallFont
                     opacity: 0.7
                     leftPadding: enableDND.indicator.width + enableDND.spacing
+                }
+            }
+
+            Item { implicitHeight: Kirigami.Units.smallSpacing }
+
+            ColumnLayout {
+                Layout.leftMargin: Kirigami.Units.largeSpacing
+
+                CheckBox {
+                    id: muteOnOverlay
+                    text: i18n("Mute a sound device")
+                }
+
+                Label {
+                    text: i18n("Silence audio while overlay is visible")
+                    font: Kirigami.Theme.smallFont
+                    opacity: 0.7
+                    leftPadding: muteOnOverlay.indicator.width + muteOnOverlay.spacing
                 }
             }
         }

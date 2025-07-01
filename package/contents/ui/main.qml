@@ -11,6 +11,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.private.batterymonitor
 import org.kde.ksysguard.sensors as Sensors
 import org.kde.notificationmanager as NotificationManager
+import "." as Local
 
 PlasmoidItem {
     id: root
@@ -59,6 +60,10 @@ PlasmoidItem {
 
     NotificationManager.Settings {
         id: notificationSettings
+    }
+
+    Local.VolumeManager {
+        id: volumeManager
     }
 
     Timer {
@@ -276,6 +281,9 @@ PlasmoidItem {
             if (plasmoid.configuration.enableDND) {
                 toggleDnd(false)
             }
+            if (plasmoid.configuration.muteOnOverlay) {
+                volumeManager.restoreVolume()
+            }
         } else {
             createOverlay()
             overlayActive = true
@@ -349,6 +357,9 @@ PlasmoidItem {
                     if (plasmoid.configuration.enableDND) {
                         toggleDnd(true)
                     }
+                    if (plasmoid.configuration.muteOnOverlay) {
+                        volumeManager.muteVolume()
+                    }
                     Plasmoid.expanded = false
                 })
 
@@ -359,6 +370,9 @@ PlasmoidItem {
                     inhibitionControl.uninhibit()
                     if (plasmoid.configuration.enableDND) {
                         toggleDnd(false)
+                    }
+                    if (plasmoid.configuration.muteOnOverlay) {
+                        volumeManager.restoreVolume()
                     }
                 })
 
