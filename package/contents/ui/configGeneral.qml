@@ -270,14 +270,14 @@ SimpleKCM {
                 CheckBox {
                     id: showBattery
                     text: i18n("Show battery status")
-                    enabled: showClock.checked && batteryInfo.hasBatteries
-                    opacity: showClock.checked && batteryInfo.hasBatteries ? 1.0 : 0.5
+                    enabled: showClock.checked && batteryInfo.hasInternalBatteries
+                    opacity: showClock.checked && batteryInfo.hasInternalBatteries ? 1.0 : 0.5
                 }
 
                 Label {
                     text: i18n("Display battery status on the overlay")
                     font: Kirigami.Theme.smallFont
-                    opacity: showClock.checked && batteryInfo.hasBatteries ? 0.7 : 0.3
+                    opacity: showClock.checked && batteryInfo.hasInternalBatteries ? 0.7 : 0.3
                     leftPadding: showBattery.indicator.width + showBattery.spacing
                 }
             }

@@ -9,7 +9,7 @@ import org.kde.plasma.private.battery
 Text {
     id: batteryItem
 
-    property bool hasBattery: batteryInfo.hasBatteries
+    property bool hasBattery: batteryInfo.hasInternalBatteries
     property int batteryPercent: hasBattery ? batteryInfo.percent : 100
     property bool isCharging: batteryInfo.state === BatteryControlModel.Charging
     property int clockSize: 96
