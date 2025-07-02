@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: darkstore\n"
 "Report-Msgid-Bugs-To: https://github.com/vmkspv/darkstore/issues\n"
-"POT-Creation-Date: 2025-06-22 17:30+0300\n"
-"PO-Revision-Date: 2025-06-22 18:00+0300\n"
+"POT-Creation-Date: 2025-07-02 23:00+0300\n"
+"PO-Revision-Date: 2025-07-02 23:30+0300\n"
 "Last-Translator: Vladimir Kosolapov\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -91,6 +91,10 @@ msgid "Countdown duration:"
 msgstr "Зворотній відлік:"
 
 #: package/contents/ui/configGeneral.qml
+msgid "Immediate"
+msgstr "Негайно"
+
+#: package/contents/ui/configGeneral.qml
 #: package/contents/ui/main.qml
 msgid "%1 second"
 msgid_plural "%1 seconds"
@@ -134,6 +138,14 @@ msgstr ""
 #: package/contents/ui/configGeneral.qml
 msgid "Activate DND while overlay is visible"
 msgstr "Приховувати сповіщення при запуску оверлея"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Mute a sound device"
+msgstr "Заглушити джерело звуку"
+
+#: package/contents/ui/configGeneral.qml
+msgid "Silence audio while overlay is visible"
+msgstr "Зменшувати гучність при запуску оверлея"
 
 #: package/contents/ui/KWinManager.qml
 msgid "Overlay settings for Darkstore"
