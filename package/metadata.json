@@ -21,7 +21,7 @@
         "Id": "io.github.vmkspv.darkstore",
         "License": "GPL-3.0",
         "Name": "Darkstore",
-        "Version": "1.0.1",
+        "Version": "1.0.2",
         "Website": "https://github.com/vmkspv/darkstore"
     },
     "X-Plasma-API": "declarativeappletscript",
