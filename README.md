@@ -11,24 +11,13 @@ _Darkstore_ is a KDE Plasma applet to prevent OLED burn-in during downloads.
   <a href="https://github.com/vmkspv/darkstore/releases/latest">
     <img src="https://img.shields.io/github/v/release/vmkspv/darkstore?logo=github&logoColor=fff&labelColor=3a3e42&color=c7422b"/>
   </a>
-  <a href="https://store.kde.org/p/2290747">
-    <img src="https://img.shields.io/github/downloads/vmkspv/darkstore/total?logo=kde&logoColor=fff&labelColor=3a3e42&color=c7422b"/>
+  <a href="https://github.com/vmkspv/darkstore/releases">
+    <img src="https://img.shields.io/github/downloads/vmkspv/darkstore/total?logo=git&logoColor=fff&labelColor=3a3e42&color=c7422b"/>
   </a>
 </p>
 
 <br>
 <img src="preview.gif" width="742" title="Popup widget">
-
-## Installation
-
-<a href="https://store.kde.org/p/2290747">
-  <img src="https://kde.org/stuff/clipart/logo/kde-logo-grey-w-slug-vectorized.svg" width="64" align="left"/>
-</a>
-
-The recommended installation method is via the [KDE Store](https://store.kde.org/p/2290747).  
-Plasmoid can be easily added from Plasma Widget Explorer or Discover (KDE Software Center).
-
-The package for manual installation is available in the [releases](https://github.com/vmkspv/darkstore/releases) section.
 
 ## Building from source
 
@@ -40,13 +29,11 @@ The recommended method is to use KPackage Manager:
 
 After installation, the applet should appear in the standard panel as part of the System Tray widget.
 
-To update an existing installation, use `--upgrade` instead of `--install`.
-
 ## Contributing
 
-Contributions are welcome!
+**This project is archived and no longer accepting contributions**.
 
-If you have an idea, bug report or something else, don’t hesitate to [open an issue](https://github.com/vmkspv/darkstore/issues).
+If you'd like to continue development, feel free to fork this repository.
 
 > This project follows the [KDE Community Code of Conduct](https://kde.org/code-of-conduct).
 
